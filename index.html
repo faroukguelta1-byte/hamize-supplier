@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamize | انضم كمورد</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F5A623;
+      --orange-dark: #D4891A;
+      --orange-glow: rgba(245,166,35,0.13);
+      --navy: #0B1828;
+      --white: #FFFFFF;
+      --gray: #8A94A6;
+      --gray-light: #F4F6F9;
+      --border: #E4E8F0;
+      --text: #1A2A3A;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Cairo',sans-serif; color:var(--text); background:var(--white); overflow-x:hidden; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(11,24,40,0.97);
+      backdrop-filter:blur(12px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 28px; height:64px;
+      border-bottom:1px solid rgba(245,166,35,0.2);
+    }
+    .nav-logo { font-family:'Tajawal',sans-serif; font-size:1.5rem; font-weight:800; color:#fff; }
+    .nav-logo span { color:var(--orange); }
+    .nav-cta {
+      background:var(--orange); color:var(--navy);
+      border:none; border-radius:8px;
+      padding:9px 22px;
+      font-family:'Cairo',sans-serif; font-size:.9rem; font-weight:700;
+      cursor:pointer; transition:background .2s;
+    }
+    .nav-cta:hover { background:var(--orange-dark); color:#fff; }
+
+    /* HERO */
+    .hero {
+      background:var(--navy);
+      background-image:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(245,166,35,.15) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 95% 90%, rgba(245,166,35,.06) 0%, transparent 60%);
+      min-height:100vh;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:100px 24px 80px;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.35);
+      border-radius:100px; padding:6px 18px;
+      color:var(--orange); font-size:.85rem; font-weight:600;
+      margin-bottom:28px;
+      animation:fadeUp .6s ease both;
+    }
+    .hero h1 {
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(1.9rem,5vw,3.3rem); font-weight:800; line-height:1.35;
+      color:#fff; max-width:780px; margin-bottom:22px;
+      animation:fadeUp .6s .1s ease both;
+    }
+    .hero h1 span { color:var(--orange); }
+    .hero p {
+      font-size:clamp(1rem,2vw,1.12rem);
+      color:rgba(255,255,255,.62); max-width:560px; line-height:1.85;
+      margin-bottom:40px;
+      animation:fadeUp .6s .2s ease both;
+    }
+    .hero-btn {
+      background:var(--orange); color:var(--navy);
+      border:none; border-radius:12px; padding:16px 40px;
+      font-family:'Cairo',sans-serif; font-size:1.05rem; font-weight:700;
+      cursor:pointer; text-decoration:none; display:inline-block;
+      box-shadow:0 8px 32px rgba(245,166,35,.35);
+      transition:all .2s;
+      animation:fadeUp .6s .3s ease both;
+    }
+    .hero-btn:hover { background:var(--orange-dark); color:#fff; transform:translateY(-2px); }
+    .hero-stats {
+      display:flex; gap:44px; margin-top:60px;
+      animation:fadeUp .6s .4s ease both;
+    }
+    .stat { text-align:center; }
+    .stat-num { font-family:'Tajawal',sans-serif; font-size:1.9rem; font-weight:800; color:var(--orange); }
+    .stat-label { font-size:.8rem; color:rgba(255,255,255,.45); margin-top:3px; }
+
+    /* SECTIONS */
+    section { padding:80px 24px; }
+    .inner { max-width:1000px; margin:0 auto; }
+    .tag {
+      display:inline-block; background:var(--orange-glow);
+      color:var(--orange-dark); border-radius:6px;
+      padding:4px 14px; font-size:.8rem; font-weight:700;
+      margin-bottom:14px; letter-spacing:.4px;
+    }
+    .stitle {
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(1.45rem,3vw,2.1rem); font-weight:800; line-height:1.35;
+      margin-bottom:14px;
+    }
+    .ssub { font-size:1rem; color:var(--gray); line-height:1.8; max-width:580px; }
+
+    /* CARDS */
+    .why { background:var(--gray-light); }
+    .cards {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px; margin-top:48px;
+    }
+    .card {
+      background:#fff; border-radius:16px; padding:28px 24px;
+      border:1px solid var(--border);
+      transition:box-shadow .2s, transform .2s;
+    }
+    .card:hover { box-shadow:0 8px 32px rgba(0,0,0,.08); transform:translateY(-3px); }
+    .card-icon {
+      width:48px; height:48px; background:var(--orange-glow);
+      border-radius:12px; display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; margin-bottom:18px;
+    }
+    .card h3 { font-size:1rem; font-weight:700; margin-bottom:8px; }
+    .card p { font-size:.9rem; color:var(--gray); line-height:1.7; }
+
+    /* STEPS */
+    .steps { display:flex; flex-direction:column; margin-top:48px; }
+    .step {
+      display:flex; gap:24px; align-items:flex-start;
+      padding:28px 0; border-bottom:1px solid var(--border);
+    }
+    .step:last-child { border-bottom:none; }
+    .step-num {
+      flex-shrink:0; width:44px; height:44px;
+      background:var(--navy); color:var(--orange); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:800;
+    }
+    .step h3 { font-size:1rem; font-weight:700; margin-bottom:6px; }
+    .step p { font-size:.9rem; color:var(--gray); line-height:1.7; }
+
+    /* FORM */
+    #register { background:var(--gray-light); }
+    .form-wrap {
+      background:#fff; border-radius:20px; border:1px solid var(--border);
+      box-shadow:0 4px 40px rgba(0,0,0,.07);
+      padding:48px 40px; max-width:680px; margin:0 auto;
+    }
+    .form-header { text-align:center; margin-bottom:36px; }
+    .form-header h2 {
+      font-family:'Tajawal',sans-serif;
+      font-size:1.7rem; font-weight:800; margin-bottom:8px;
+    }
+    .form-header p { color:var(--gray); font-size:.95rem; }
+    .q-block { margin-bottom:26px; }
+    .q-label { display:block; font-size:.92rem; font-weight:700; margin-bottom:10px; }
+    .q-num {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:22px; height:22px; background:var(--navy); color:var(--orange);
+      border-radius:50%; font-size:.7rem; font-weight:800; margin-left:8px;
+    }
+    .q-input, .q-select {
+      width:100%; border:1.5px solid var(--border); border-radius:10px;
+      padding:12px 16px; font-family:'Cairo',sans-serif;
+      font-size:.95rem; color:var(--text); background:#fff;
+      transition:border-color .2s, box-shadow .2s; outline:none;
+      appearance:none; -webkit-appearance:none;
+    }
+    .q-input:focus, .q-select:focus {
+      border-color:var(--orange);
+      box-shadow:0 0 0 3px rgba(245,166,35,.12);
+    }
+    .select-wrap { position:relative; }
+    .select-wrap::after {
+      content:'▾'; position:absolute; left:14px; top:50%;
+      transform:translateY(-50%); color:var(--gray);
+      pointer-events:none; font-size:1rem;
+    }
+    .q-radio-group { display:flex; flex-direction:column; gap:10px; }
+    .q-radio {
+      display:flex; align-items:center; gap:12px;
+      padding:12px 16px; border:1.5px solid var(--border);
+      border-radius:10px; cursor:pointer;
+      transition:border-color .2s, background .2s; font-size:.92rem;
+    }
+    .q-radio:hover { border-color:var(--orange); background:var(--orange-glow); }
+    .q-radio input[type=radio] { accent-color:var(--orange); width:17px; height:17px; }
+    .q-radio.selected { border-color:var(--orange); background:rgba(245,166,35,.07); font-weight:600; }
+    .submit-btn {
+      width:100%; background:var(--orange); color:var(--navy);
+      border:none; border-radius:12px; padding:16px;
+      font-family:'Cairo',sans-serif; font-size:1.05rem; font-weight:700;
+      cursor:pointer; box-shadow:0 6px 24px rgba(245,166,35,.3);
+      transition:all .2s; margin-top:8px;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+    .submit-btn:hover { background:var(--orange-dark); color:#fff; transform:translateY(-1px); }
+    .submit-note { text-align:center; margin-top:14px; font-size:.82rem; color:var(--gray); }
+
+    /* FOOTER */
+    footer {
+      background:var(--navy); color:rgba(255,255,255,.45);
+      text-align:center; padding:32px 24px; font-size:.85rem;
+    }
+    footer a { color:var(--orange); text-decoration:none; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @media(max-width:600px){
+      .hero-stats { gap:22px; }
+      .form-wrap { padding:28px 18px; }
+      nav { padding:0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">حا<span>ميز</span></div>
+  <button class="nav-cta" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">سجّل كمورد الآن</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🇩🇿 منصة جزائرية 100٪</div>
+  <h1>وصّل منتجاتك لآلاف التجار<br/><span>في كل ولايات الجزائر</span></h1>
+  <p>
+    Hamize منصة B2B تربطك مباشرة بالتجار والحرفيين. التجار يبحثون عن منتجاتك، يرسلون الطلبات، وأنت تختار مع من تتعامل — بدون وسطاء وبدون جهد تسويق إضافي.
+  </p>
+  <a class="hero-btn" href="#register">سجّل الآن وانتظر اتصالنا</a>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">+500</div>
+      <div class="stat-label">تاجر نشط على المنصة</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">69</div>
+      <div class="stat-label">ولاية مغطاة</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">وسيط بينك وبين الزبون</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="inner">
+    <div class="tag">لماذا Hamize؟</div>
+    <h2 class="stitle">مزايا حقيقية تفرق في عملك</h2>
+    <p class="ssub">مش وعود فارغة — فوائد ملموسة تحس بها من أول طلب</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>طلبات منظمة ومباشرة</h3>
+        <p>التجار يرسلون لك طلب عرض سعر (RFQ) مع بيانات متجرهم الكاملة. أنت تختار مع من تتعامل.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>أسعارك سرية وخاصة بك</h3>
+        <p>كل سعر تعطيه خاص بالتاجر المعني فقط. لا منافس يعرف أسعارك — سوق الجملة محمي.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📍</div>
+        <h3>تجار موثوقون ومعروفو الهوية</h3>
+        <p>كل تاجر يسجل ببيانات محله وموقعه GPS. تعرف مع من تتعامل قبل ما تقبل أي طلب.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>توسع بدون فريق مبيعات</h3>
+        <p>المنصة تشتغل عنك 24/7 — تجار جدد يكتشفون منتجاتك دون ما تدفع لأي وسيط أو مندوب.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>إدارة طلباتك من هاتفك</h3>
+        <p>قبول الطلبات، متابعة التسليم، والتواصل مع التجار — كل شيء من تطبيق واحد في جيبك.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <h3>مشترون جادون فقط</h3>
+        <p>التجار على Hamize يبحثون فعلاً عن التموين — مش تصفح فارغ. وقتك لا يُضيَّع مع من ليس جاداً.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section>
+  <div class="inner">
+    <div class="tag">كيف يعمل؟</div>
+    <h2 class="stitle">بسيط من أول يوم</h2>
+    <p class="ssub">ما تحتاج تبدل أسلوب عملك — فقط أضف قناة بيع جديدة</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">١</div>
+        <div>
+          <h3>تسجّل وتضيف بيانات شركتك</h3>
+          <p>تعبئ معلومات نشاطك — اسم الشركة، نوع المنتجات، الولاية، ونطاق التوصيل. فريق Hamize يتواصل معك لإكمال الإعداد.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <div>
+          <h3>التجار يرسلون طلبات عروض الأسعار</h3>
+          <p>التاجر يشوف منتجاتك ويرسل طلب RFQ مع بيانات محله كاملة. أنت تستلم الطلب وتتحقق من هوية التاجر.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <div>
+          <h3>أنت تحدد السعر وتقرر</h3>
+          <p>ترد بسعرك الخاص لهذا التاجر. إذا وافق، تؤكد الطلب وتتفق على التسليم — أنت دايماً في السيطرة.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٤</div>
+        <div>
+          <h3>تسليم وعلاقة تجارية طويلة</h3>
+          <p>التاجر الراضي يرجع يطلب — وهكذا تبني قاعدة زبائن ثابتة بدون جهد تسويق إضافي.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="register">
+  <div class="inner">
+    <div class="form-wrap">
+      <div class="form-header">
+        <h2>سجّل كمورد على Hamize</h2>
+        <p>أجب على هذه الأسئلة وسيتواصل معك فريقنا خلال 24 ساعة</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">١</span> ما اسم شركتك أو مؤسستك؟</label>
+        <input class="q-input" type="text" id="q1" placeholder="مثال: مصنع الجزائر للمواد الغذائية" />
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">٢</span> ما نوع نشاطك؟</label>
+        <div class="q-radio-group">
+          <label class="q-radio"><input type="radio" name="q2" value="مصنع / منتج محلي" onchange="selectRadio(this)"/> مصنع / منتج محلي</label>
+          <label class="q-radio"><input type="radio" name="q2" value="مستورد" onchange="selectRadio(this)"/> مستورد</label>
+          <label class="q-radio"><input type="radio" name="q2" value="تاجر جملة" onchange="selectRadio(this)"/> تاجر جملة</label>
+          <label class="q-radio"><input type="radio" name="q2" value="موزع إقليمي" onchange="selectRadio(this)"/> موزع إقليمي</label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">٣</span> ما نوع المنتجات التي تبيعها؟</label>
+        <input class="q-input" type="text" id="q3" placeholder="مثال: مواد غذائية، منسوجات، مواد البناء..." />
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">٤</span> في أي ولاية تتمركز؟</label>
+        <div class="select-wrap">
+          <select class="q-select" id="q4">
+            <option value="">— اختر الولاية —</option>
+            <option>01 - أدرار</option>
+            <option>02 - الشلف</option>
+            <option>03 - الأغواط</option>
+            <option>04 - أم البواقي</option>
+            <option>05 - باتنة</option>
+            <option>06 - بجاية</option>
+            <option>07 - بسكرة</option>
+            <option>08 - بشار</option>
+            <option>09 - البليدة</option>
+            <option>10 - البويرة</option>
+            <option>11 - تمنراست</option>
+            <option>12 - تبسة</option>
+            <option>13 - تلمسان</option>
+            <option>14 - تيارت</option>
+            <option>15 - تيزي وزو</option>
+            <option>16 - الجزائر</option>
+            <option>17 - الجلفة</option>
+            <option>18 - جيجل</option>
+            <option>19 - سطيف</option>
+            <option>20 - سعيدة</option>
+            <option>21 - سكيكدة</option>
+            <option>22 - سيدي بلعباس</option>
+            <option>23 - عنابة</option>
+            <option>24 - قالمة</option>
+            <option>25 - قسنطينة</option>
+            <option>26 - المدية</option>
+            <option>27 - مستغانم</option>
+            <option>28 - المسيلة</option>
+            <option>29 - معسكر</option>
+            <option>30 - ورقلة</option>
+            <option>31 - وهران</option>
+            <option>32 - البيض</option>
+            <option>33 - إليزي</option>
+            <option>34 - برج بوعريريج</option>
+            <option>35 - بومرداس</option>
+            <option>36 - الطارف</option>
+            <option>37 - تندوف</option>
+            <option>38 - تيسمسيلت</option>
+            <option>39 - الوادي</option>
+            <option>40 - خنشلة</option>
+            <option>41 - سوق أهراس</option>
+            <option>42 - تيبازة</option>
+            <option>43 - ميلة</option>
+            <option>44 - عين الدفلى</option>
+            <option>45 - النعامة</option>
+            <option>46 - عين تموشنت</option>
+            <option>47 - غرداية</option>
+            <option>48 - غليزان</option>
+            <option>49 - تيميمون</option>
+            <option>50 - برج باجي مختار</option>
+            <option>51 - أولاد جلال</option>
+            <option>52 - بني عباس</option>
+            <option>53 - عين صالح</option>
+            <option>54 - عين قزام</option>
+            <option>55 - توقرت</option>
+            <option>56 - جانت</option>
+            <option>57 - المغير</option>
+            <option>58 - المنيعة</option>
+            <option>59 - تلمسان (الغزوات)</option>
+            <option>60 - بومرداس (نصر)</option>
+            <option>61 - عين الدفلى (خميس)</option>
+            <option>62 - وهران (سيدي الشحمي)</option>
+            <option>63 - الجزائر (بئر مراد رايس)</option>
+            <option>64 - البليدة (الأربعاء)</option>
+            <option>65 - تيزي وزو (عزازقة)</option>
+            <option>66 - بجاية (أقبو)</option>
+            <option>67 - سطيف (العلمة)</option>
+            <option>68 - قسنطينة (الخروب)</option>
+            <option>69 - عنابة (برحال)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">٥</span> إلى أي نطاق تستطيع التوصيل؟</label>
+        <div class="q-radio-group">
+          <label class="q-radio"><input type="radio" name="q5" value="ولايتي فقط" onchange="selectRadio(this)"/> ولايتي فقط</label>
+          <label class="q-radio"><input type="radio" name="q5" value="المنطقة المجاورة (3-5 ولايات)" onchange="selectRadio(this)"/> المنطقة المجاورة (3–5 ولايات)</label>
+          <label class="q-radio"><input type="radio" name="q5" value="كل الجزائر" onchange="selectRadio(this)"/> كل الجزائر (69 ولاية)</label>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="q-block">
+        <label class="q-label"><span class="q-num">٦</span> ما رقم هاتفك؟ (واتساب مفضل)</label>
+        <input class="q-input" type="tel" id="q6" placeholder="مثال: 0550000000" />
+      </div>
+
+      <button class="submit-btn" onclick="sendToWhatsApp()">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.859L.057 23.571a.5.5 0 0 0 .611.611l5.712-1.475A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.001-1.373l-.36-.214-3.715.958.983-3.608-.234-.371A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+        </svg>
+        أرسل وانتظر اتصالنا
+      </button>
+      <p class="submit-note">🔒 معلوماتك سرية — تُستخدم فقط للتواصل معك من فريق Hamize</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Hamize · منصة B2B الجزائرية · جميع الحقوق محفوظة</p>
+  <p style="margin-top:6px;"><a href="https://hamize.com">hamize.com</a> &nbsp;·&nbsp; <a href="https://wa.me/213557048595">واتساب</a></p>
+</footer>
+
+<script>
+  function selectRadio(input) {
+    const group = input.closest('.q-radio-group');
+    group.querySelectorAll('.q-radio').forEach(el => el.classList.remove('selected'));
+    input.closest('.q-radio').classList.add('selected');
+  }
+
+  function sendToWhatsApp() {
+    const q1 = document.getElementById('q1').value.trim();
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    const q3 = document.getElementById('q3').value.trim();
+    const q4 = document.getElementById('q4').value;
+    const q5 = document.querySelector('input[name="q5"]:checked');
+    const q6 = document.getElementById('q6').value.trim();
+
+    if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6) {
+      alert('يرجى تعبئة جميع الحقول قبل الإرسال.');
+      return;
+    }
+
+    const msg =
+`🏭 *طلب انضمام مورد جديد — Hamize*
+
+1️⃣ اسم الشركة: ${q1}
+2️⃣ نوع النشاط: ${q2.value}
+3️⃣ نوع المنتجات: ${q3}
+4️⃣ الولاية: ${q4}
+5️⃣ نطاق التوصيل: ${q5.value}
+6️⃣ رقم الهاتف: ${q6}`;
+
+    window.open('https://wa.me/213557048595?text=' + encodeURIComponent(msg), '_blank');
+  }
+</script>
+</body>
+</html>
